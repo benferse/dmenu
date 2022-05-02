@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Power/sleep/session options handling via dmenu
+
+case "$(echo -e 'sleep\nexit\nreboot\npoweroff' | dmenu "$@")" in
+    sleep)
+        # Lock the session, suspend the screen, then the machine
+        slock &
+        sleep 0.1
+        xset dpms force suspend
+        systemctl suspend
+        ;;
+
+    exit)
+        # Kill the window manager
+        pkill -TERM dwm
+        ;;
+
+    poweroff)
+        # Ask the service manager to halt the system and then
+        # power off the machine
+        systemctl poweroff
+        ;;
+
+    reboot)
+        # Ask the service manager to halt the system and then
+        # restart the machine
+        systemctl reboot
+        ;;
+esac
