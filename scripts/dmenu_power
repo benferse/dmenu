@@ -3,7 +3,7 @@
 # Power/sleep/session options handling via dmenu
 
 case "$(echo -e '⏾ sleep\n exit\nﰇ reboot\n poweroff' | dmenu "$@")" in
-    sleep)
+    "⏾ sleep")
         # Lock the session, suspend the screen, then the machine
         # Also, pause any notifications while we're locked
         lock_screen &
@@ -12,20 +12,20 @@ case "$(echo -e '⏾ sleep\n exit\nﰇ reboot\n poweroff' | dmenu "$@")" i
         systemctl suspend
         ;;
 
-    exit)
+    " exit")
         # Kill the window manager
         pkill -TERM dwm
         ;;
 
-    poweroff)
-        # Ask the service manager to halt the system and then
-        # power off the machine
-        systemctl poweroff
-        ;;
-
-    reboot)
+    "ﰇ reboot")
         # Ask the service manager to halt the system and then
         # restart the machine
         systemctl reboot
+        ;;
+
+    " poweroff")
+        # Ask the service manager to halt the system and then
+        # power off the machine
+        systemctl poweroff
         ;;
 esac
