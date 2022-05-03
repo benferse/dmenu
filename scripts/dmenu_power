@@ -2,10 +2,11 @@
 
 # Power/sleep/session options handling via dmenu
 
-case "$(echo -e 'sleep\nexit\nreboot\npoweroff' | dmenu "$@")" in
+case "$(echo -e '⏾ sleep\n exit\nﰇ reboot\n poweroff' | dmenu "$@")" in
     sleep)
         # Lock the session, suspend the screen, then the machine
-        slock &
+        # Also, pause any notifications while we're locked
+        lock_screen &
         sleep 0.1
         xset dpms force suspend
         systemctl suspend
